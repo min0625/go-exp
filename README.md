@@ -1,20 +1,42 @@
 # go-exp
 
-Small, experimental helpers for Go that lean on generics to reduce boilerplate
-without piling on dependencies. Expect the surface area to stay small and to
-evolve as patterns prove useful across projects.
+[![Go Reference](https://pkg.go.dev/badge/github.com/min0625/go-exp.svg)](https://pkg.go.dev/github.com/min0625/go-exp)
+
+Small, experimental helpers for Go that lean on generics to reduce boilerplate without piling on dependencies.
 
 ## Installation
 
-```
+```sh
 go get github.com/min0625/go-exp
 ```
 
-## Usage
+## Packages
 
-APIs live in the root package and future subpackages. Browse the documentation
-with `go doc github.com/min0625/go-exp` or `go doc` on specific identifiers once
-they land.
+| Package | Description |
+|---------|-------------|
+| [`errorx`](https://pkg.go.dev/github.com/min0625/go-exp/errorx) | Error handling helpers — generic `AsType`, `Unwrapper`, `MultiUnwrapper` |
+| [`iterx`](https://pkg.go.dev/github.com/min0625/go-exp/iterx) | `iter.Seq` helpers — `Map`, `Filter` |
+| [`ptr`](https://pkg.go.dev/github.com/min0625/go-exp/ptr) | Pointer helpers — `New`, `Value`, `ValueOr`, `Clone` |
+| [`slicex`](https://pkg.go.dev/github.com/min0625/go-exp/slicex) | Slice helpers — `Map`, `Filter`, `FirstOr`, `Last`, `LastOr` |
+| [`slogx`](https://pkg.go.dev/github.com/min0625/go-exp/slogx) | `log/slog` helpers — `FuncValuer` |
+| [`util`](https://pkg.go.dev/github.com/min0625/go-exp/util) | Miscellaneous utilities — `PickOne` |
+
+## Examples
+
+```go
+// ptr: take the address of a literal
+p := ptr.New(42) // *int
+
+// slicex: transform and filter slices
+names := slicex.Map([]int{1, 2, 3}, strconv.Itoa) // ["1", "2", "3"]
+evens := slicex.Filter([]int{1, 2, 3, 4}, func(n int) bool { return n%2 == 0 }) // [2, 4]
+
+// errorx: type-safe error unwrapping
+if e, ok := errorx.AsType[*MyError](err); ok { ... }
+
+// slogx: lazy log value evaluation
+attr := slog.Any("key", slogx.FuncValuer(func() slog.Value { return slog.StringValue(compute()) }))
+```
 
 ## Principles
 
@@ -24,5 +46,10 @@ they land.
 
 ## Development
 
-- Requires Go 1.25 or newer (see go.mod).
-- Run tests with `go test ./...`.
+Requires Go 1.25 or newer.
+
+```sh
+make test   # go test -v -race -failfast ./...
+make lint   # run golangci-lint
+make check  # lint + test
+```
