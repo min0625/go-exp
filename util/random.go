@@ -1,5 +1,5 @@
 // Package util provides various utility functions.
-package util //nolint:revive // var-naming
+package util
 
 import (
 	"math/rand/v2"
