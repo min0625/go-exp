@@ -36,7 +36,6 @@ go test ./...
 Use Makefile targets as the canonical workflow:
 
 ```bash
-make fmt   # format with golangci-lint formatters
 make lint  # run golangci-lint checks
 make test  # go test -v -race -failfast ./...
 make check # lint + test
