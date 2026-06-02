@@ -2,9 +2,11 @@ NEW_FROM_REV ?= HEAD
 
 fix:
 	go mod tidy
+	golangci-lint config verify
 	golangci-lint run -v --new-from-rev=$(NEW_FROM_REV) --fix ./...
 
 lint:
+	golangci-lint config verify
 	golangci-lint run -v --new-from-rev=$(NEW_FROM_REV) ./...
 
 test:
