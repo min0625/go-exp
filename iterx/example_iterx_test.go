@@ -3,6 +3,7 @@ package iterx_test
 import (
 	"fmt"
 	"slices"
+	"strconv"
 
 	"github.com/min0625/go-exp/iterx"
 )
@@ -10,7 +11,7 @@ import (
 func ExampleMap() {
 	seq := slices.Values([]int{1, 2, 3})
 	mapped := iterx.Map(seq, func(x int) string {
-		return fmt.Sprintf("%d", x*2)
+		return strconv.Itoa(x * 2)
 	})
 
 	fmt.Println(slices.Collect(mapped))

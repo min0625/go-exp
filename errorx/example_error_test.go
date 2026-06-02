@@ -1,6 +1,7 @@
 package errorx_test
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/min0625/go-exp/errorx"
@@ -23,7 +24,7 @@ func ExampleAsType() {
 }
 
 func ExampleAsType_notMatched() {
-	err := fmt.Errorf("plain error")
+	err := errors.New("plain error")
 
 	_, ok := errorx.AsType[*myError](err)
 	fmt.Println(ok)
